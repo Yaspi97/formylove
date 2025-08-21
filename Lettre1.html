@@ -3,91 +3,46 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Lettre machine à écrire (avec curseur) & Arbre de cœurs</title>
+<title>Lettre & Arbre de cœurs</title>
 <style>
-  html,body{height:100%; margin:0}
-  body{
-    font-family: Georgia, "Times New Roman", serif;
-    background:#fff7f1;
-    color:#222;
-    overflow:hidden;
-  }
-
-  .stage{
-    height:100dvh;
-    display:grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap:2vw;
-    align-items:center;
-    padding:4vh 5vw;
-  }
-
-  .letter{
-    max-width:58ch;
-    font-size:clamp(16px,2.1vw,19px);
-    line-height:1.65;
-    max-height:86vh;
-    overflow:auto;
-    padding-right:.25rem;
-    white-space:pre-wrap;
-  }
-  .letter h2{ margin:0 0 .6rem; font-size:clamp(18px,2.4vw,22px); }
-
-  /* Curseur clignotant */
-  .cursor{
-    display:inline-block;
-    width:0.6ch;
-    margin-left:1px;
-    border-right:2px solid #222;
-    animation: blink 1s steps(1) infinite;
-    transform: translateY(1px);
-  }
-  @keyframes blink{ 0%,50%{opacity:1} 50.001%,100%{opacity:0} }
-
-  .right{ position:relative; display:grid; place-items:center; }
-  .halo{
-    position:absolute;
-    width:min(70vmin,520px); aspect-ratio:1/1; border-radius:50%;
-    background: radial-gradient(50% 50% at 50% 50%, #ffd6da 0%, rgba(255,214,218,0) 65%);
-    filter: blur(2px); opacity:.5; transform:translateY(4%);
-  }
-  svg{ width:min(520px,82%); height:auto; }
-  path{ stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-
-  @media (max-width:720px){
-    .stage{ grid-template-columns:1fr; padding:3vh 5vw; }
-    .letter{ max-height:48vh; }
-  }
+  html,body{height:100%;margin:0}
+  body{font-family:Georgia,"Times New Roman",serif;background:#fbf2ea;color:#222;overflow:hidden}
+  .stage{height:100dvh;display:grid;grid-template-columns:1.05fr 1fr;gap:2vw;align-items:center;padding:4vh 5vw}
+  .letter{max-width:58ch;font-size:clamp(16px,2.1vw,19px);line-height:1.65;max-height:86vh;overflow:auto;white-space:pre-wrap}
+  .letter h2{margin:0 0 .6rem;font-size:clamp(18px,2.4vw,22px)}
+  .cursor{display:inline-block;width:0.6ch;margin-left:1px;border-right:2px solid #222;animation:blink 1s steps(1) infinite;transform:translateY(1px)}
+  @keyframes blink{0%,50%{opacity:1}50.001%,100%{opacity:0}}
+  .right{position:relative;display:grid;place-items:center}
+  .halo{position:absolute;width:min(70vmin,520px);aspect-ratio:1/1;border-radius:50%;
+        background:radial-gradient(50% 50% at 50% 50%,#ffd6da 0%,rgba(255,214,218,0) 65%);
+        filter:blur(2px);opacity:.5;transform:translateY(4%)}
+  svg{width:min(520px,82%);height:auto}
+  path{stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  @media (max-width:720px){.stage{grid-template-columns:1fr;padding:3vh 5vw}.letter{max-height:48vh}}
 </style>
 </head>
 <body>
   <div class="stage">
-    <!-- 1) LETTRE -->
-    <article class="letter" id="letter">
+    <!-- LETTRE -->
+    <article class="letter">
       <h2>Hey toi Aïssa</h2>
       <p id="text"></p>
+      <noscript>Active JavaScript pour voir l’animation 😊</noscript>
     </article>
 
-    <!-- 2) ARBRE DE CŒURS -->
+    <!-- ARBRE -->
     <div class="right">
       <div class="halo"></div>
-      <svg id="love-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
-        <!-- Tronc -->
+      <svg id="love-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-label="Arbre de cœurs">
         <path class="trunk t1" d="M195 330 L165 330 L150 195 Q148 175 130 158 Q115 144 110 130 Q108 118 122 118 Q137 121 150 135 Q165 152 175 166 Q182 176 190 166 Q206 146 224 134 Q245 120 252 120 Q267 120 262 135 Q258 147 243 160 Q224 176 215 195 L205 330 Z"/>
         <path class="trunk t2" d="M180 330 L195 330 L205 195 Q208 173 228 155 Q247 139 255 128 Q265 114 248 114 Q233 116 214 128 Q195 141 182 160 Q175 170 167 160 Q155 146 142 134 Q126 119 112 116 Q100 114 104 128 Q108 142 124 156 Q142 172 148 195 L160 330 Z"/>
-
-        <!-- Cœurs -->
         <path class="heart h-cream" d="M106,158 C106,146 90,146 90,154 C90,164 106,168 106,180 C106,168 122,164 122,154 C122,146 106,146 106,158 Z"/>
         <path class="heart h-cream" d="M280,150 C280,138 264,138 264,146 C264,156 280,160 280,172 C280,160 296,156 296,146 C296,138 280,138 280,150 Z"/>
         <path class="heart h-cream" d="M240,190 C240,178 224,178 224,186 C224,196 240,200 240,212 C240,200 256,196 256,186 C256,178 240,178 240,190 Z"/>
         <path class="heart h-red" d="M256,214 C256,202 240,202 240,210 C240,220 256,224 256,236 C256,224 272,220 272,210 C272,202 256,202 256,214 Z"/>
         <path class="heart h-red" d="M102,230 C102,218 86,218 86,226 C86,236 102,240 102,252 C102,240 118,236 118,226 C118,218 102,218 102,230 Z"/>
         <path class="heart h-red" d="M210,136 C210,124 194,124 194,132 C194,142 210,146 210,158 C210,146 226,142 226,132 C226,124 210,124 210,136 Z"/>
-        <path class="heart h-pinkBig" d="M178,170
-          C178,148 146,148 146,162
-          C146,182 178,188 178,210
-          C178,188 210,182 210,162
-          C210,148 178,148 178,170 Z"/>
+        <path class="heart h-pinkBig" d="M178,170 C178,148 146,148 146,162 C146,182 178,188 178,210 C178,188 210,182 210,162 C210,148 178,148 178,170 Z"/>
         <path class="heart h-red" d="M137,206 C137,198 127,198 127,203 C127,209 137,211 137,219 C137,211 147,209 147,203 C147,198 137,198 137,206 Z"/>
         <path class="heart h-cream" d="M300,205 C300,197 290,197 290,202 C290,208 300,210 300,218 C300,210 310,208 310,202 C310,197 300,197 300,205 Z"/>
         <path d="M70 332 Q180 346 290 332" fill="none" stroke="#d6d0c2" stroke-width="2"/>
@@ -96,102 +51,105 @@
   </div>
 
   <script>
+  document.addEventListener('DOMContentLoaded', () => {
     /* ===== Texte machine à écrire + curseur ===== */
     const lines = [
       "Hey toi Aïssa, mon code préféré,",
       "Avec toi, mon cœur est toujours bien codé.",
       "",
+      "Ce n’est pas de rime ni un poème ce que je t’écris,",
+      "mais je veux que tu saches que mon intention c’est de nous retrouver comme avant mais en meilleur.",
+      "",
+      "Je veux prendre soin de toi comme tu as toujours fait avec moi",
+      "et te donner tout l'amour que j'ai.",
+      "",
+      "Tu es cette personne que la vie nous offre une seule fois,",
+      "donc je n’ai pas l’intention de te filer,",
+      "",
+      "parce que tu es spéciale pour moi,",
+      "tu es la seule à pouvoir me faire sourire.",
+      "",
+      "(à suivre)"
+    ];
 
-    const textBox = document.getElementById("text");
+    const textBox = document.getElementById('text');
+    if (textBox) {
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      textBox.appendChild(cursor);
 
-    let lineIndex = 0;
+      let lineIndex = 0;
+      const speed = 40;    // ms/lettre
+      const lineGap = 500; // pause entre lignes
 
-    function typeLine(){
-        // Fin : garde le curseur mais arrête le clignotement plus doux si tu veux :
-        // cursor.style.animation = "blink 1.5s steps(1) infinite";
+      function typeLine(){
+        if (lineIndex >= lines.length) return;
+        const content = lines[lineIndex];
+        let i = 0;
+        const span = document.createElement('span');
+        textBox.insertBefore(span, cursor);
+
+        const typer = setInterval(() => {
+          if (i < content.length) {
+            span.textContent += content.charAt(i++);
+          } else {
+            clearInterval(typer);
+            textBox.insertBefore(document.createElement('br'), cursor);
+            lineIndex++;
+            setTimeout(typeLine, lineGap);
+          }
+        }, speed);
       }
-      const content = lines[lineIndex];
-      const span = document.createElement("span");
-      textBox.insertBefore(span, cursor); // placer le texte juste avant le curseur
-
-      const speed = 40;          // ms par lettre
-      const lineGap = 500;       // délai entre lignes
-      const typer = setInterval(()=>{
-          span.textContent += content.charAt(i);
-          i++;
-        }else{
-          clearInterval(typer);
-          // saut de ligne (avant le curseur)
-          textBox.insertBefore(document.createElement("br"), cursor);
-          lineIndex++;
-          setTimeout(typeLine, lineGap);
-        }
-      }, speed);
+      setTimeout(typeLine, 300);
     }
-    window.addEventListener("load", ()=> setTimeout(typeLine, 600));
 
-    /* ====== Animation arbre ====== */
-    window.addEventListener('load', () => {
-      const svg = document.getElementById('love-svg');
+    /* ===== Animation de l'arbre ===== */
+    const svg = document.getElementById('love-svg');
+    if (svg) {
       draw(svg, {stroke:'#222', width:2.5, fillOpacity:0, delay:110});
       const total = svg.querySelectorAll('path').length;
       setTimeout(() => color(svg), total * 110 + 600);
-    });
+    }
 
-    function draw(svg, {stroke='#222', width=2, fillOpacity=0, delay=120}={}){
+    function draw(svg, {stroke='#222', width=2, fillOpacity=0, delay=120} = {}){
       const paths = Array.from(svg.querySelectorAll('path'));
-      paths.forEach(p=>{
+      paths.forEach(p => {
         p.style.stroke = stroke;
         p.style.strokeWidth = width;
         p.style.fillOpacity = fillOpacity;
         const L = p.getTotalLength ? p.getTotalLength() : 0;
-        if(L){
+        if (L) {
           p.style.strokeDasharray = L;
           p.style.strokeDashoffset = L;
           p.style.transition = 'none';
         }
       });
       void svg.getBoundingClientRect();
-      paths.forEach((p,i)=>{
-        if(p.style.strokeDasharray){
+      paths.forEach((p,i) => {
+        if (p.style.strokeDasharray) {
           p.style.transition = 'stroke-dashoffset 900ms ease, fill-opacity 600ms ease';
-          setTimeout(()=>{ p.style.strokeDashoffset = 0; }, i*delay);
+          setTimeout(() => { p.style.strokeDashoffset = 0; }, i * delay);
         }
       });
     }
 
     function color(svg){
-      svg.querySelectorAll('.trunk.t1').forEach(p=>{ p.style.fill = '#6e433c'; });
-      svg.querySelectorAll('.trunk.t2').forEach(p=>{ p.style.fill = '#52322d'; });
-      const cream = '#f3dfcd';
-      const red   = '#c7473f';
-      const pink  = '#f06b6b';
-      svg.querySelectorAll('.h-cream').forEach((p,i)=> { setTimeout(()=>{ p.style.fill = cream; }, 120*i+120); });
-      svg.querySelectorAll('.h-red').forEach((p,i)=> {
-        setTimeout(()=> {
-          p.style.transition = 'fill 380ms ease, transform 380ms ease';
-          p.style.fill = red;
-          p.style.transformOrigin = 'center';
-          p.style.transform = 'scale(1.06)';
-          setTimeout(()=> p.style.transform='none', 420);
-        }, 140*i+160);
-      });
+      svg.querySelectorAll('.trunk.t1').forEach(p => p.style.fill = '#6e433c');
+      svg.querySelectorAll('.trunk.t2').forEach(p => p.style.fill = '#52322d');
+      const cream = '#f3dfcd', red = '#c7473f', pink = '#f06b6b';
+      svg.querySelectorAll('.h-cream').forEach((p,i)=> setTimeout(()=> p.style.fill = cream, 120*i+120));
+      svg.querySelectorAll('.h-red').forEach((p,i)=> setTimeout(()=>{
+        p.style.transition = 'fill 380ms ease, transform 380ms ease';
+        p.style.fill = red; p.style.transformOrigin='center'; p.style.transform='scale(1.06)';
+        setTimeout(()=> p.style.transform='none', 420);
+      }, 140*i+160));
       svg.querySelectorAll('.h-pinkBig').forEach(p=>{
         p.style.transition = 'fill 420ms ease, transform 420ms ease';
-        p.style.fill = pink;
-        p.style.transformOrigin = 'center';
-        p.style.transform = 'scale(1.04)';
+        p.style.fill = pink; p.style.transformOrigin='center'; p.style.transform='scale(1.04)';
         setTimeout(()=> p.style.transform='none', 500);
       });
     }
+  });
   </script>
 </body>
 </html>
-        if(i < content.length){
-      let i = 0;
-        return;
-      if(lineIndex >= lines.length){
-    textBox.appendChild(cursor);
-    cursor.className = "cursor";
-    const cursor = document.createElement("span");
-
