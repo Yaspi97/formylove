@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lettre d’amour virtuelle 💌</title>
+<style>
+  :root{
+    --rose-clair:#ffe6ee;
+    --rose:#ff8fb1;
+    --rose-fonce:#ff5c8a;
+    --blanc:#ffffff;
+    --ombre:0 12px 40px rgba(0,0,0,.15);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:linear-gradient(180deg, var(--rose-clair), #fff);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+  }
+
+  .carte{
+    position:relative; width:380px; height:250px;
+    background:var(--blanc); border-radius:16px; box-shadow:var(--ombre);
+    overflow:hidden;
+  }
+
+  /* Enveloppe fermée */
+  .enveloppe{
+    position:absolute; inset:0; background:var(--rose);
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center; transition:transform .8s;
+    z-index:3;
+  }
+
+  /* Lettre cachée */
+  .lettre{
+    position:absolute; inset:10% 8% 10% 8%;
+    background:var(--blanc); border-radius:12px; padding:18px; text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    opacity:0;
+    transform:translateY(100%) scale(.96);
+    z-index:2;
+  }
+
+  h2{color:var(--rose-fonce); margin:0 0 8px}
+  p.message{margin:8px 0; font-size:15px; color:#333}
+  .signature{margin-top:16px; font-size:14px; color:#555}
+
+  /* Bouton */
+  .cta{
+    position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+    background:var(--rose-fonce); color:#fff; border:none; border-radius:999px;
+    padding:10px 16px; font-weight:700; cursor:pointer; z-index:4;
+    box-shadow:0 8px 18px rgba(255,92,138,.35);
+  }
+
+  /* Animation rebond */
+  @keyframes popIn{
+    0%   { transform:translateY(100%) scale(.96); opacity:0 }
+    60%  { transform:translateY(-6%)  scale(1.02); opacity:1 }
+    80%  { transform:translateY(2%)   scale(.997) }
+    100% { transform:translateY(0)    scale(1); opacity:1 }
+  }
+
+  /* Quand ouvert */
+  .ouverte .enveloppe{ transform:rotateX(180deg); z-index:1 }
+  .ouverte .lettre{
+    animation:popIn .9s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  .ombre-sol{
+    position:absolute; inset:auto 12% 14px 12%; height:18px; border-radius:50%;
+    background:radial-gradient(60% 100% at 50% 0, rgba(0,0,0,.16), transparent 70%);
+    filter:blur(6px);
+  }
+</style>
+</head>
+<body>
+  <div class="carte" id="carte">
+    <div class="enveloppe" aria-hidden="true"></div>
+
+    <div class="lettre">
+      <h2>Pour beboubs ❤️</h2>
+      <p class="message">
+        « Toi, la plus douce de mes addictions, la plus chère de mes raisons… dis-moi combien de code dois-je écrire pour que tu reviennes dans mes bras. » <br>
+      </p>
+      <p class="signature">
+        Pour : A <br>De : P
+      </p>
+    </div>
+
+    <button class="cta" id="btn">Ouvrir la lettre 💌</button>
+    <div class="ombre-sol" aria-hidden="true"></div>
+  </div>
+
+<script>
+  const carte = document.getElementById("carte");
+  const btn = document.getElementById("btn");
+  const lettre = document.querySelector(".lettre");
+
+  btn.addEventListener("click", ()=>{
+    const ouvre = !carte.classList.contains("ouverte");
+    carte.classList.toggle("ouverte");
+    btn.textContent = ouvre ? "Fermer la lettre ✨" : "Ouvrir la lettre 💌";
+
+    if(!ouvre){
+      // Quand on referme → reset la lettre
+      lettre.style.opacity = "0";
+      lettre.style.transform = "translateY(100%) scale(.96)";
+      lettre.style.animation = "none";
+      void lettre.offsetWidth; // reflow
+      lettre.style.animation = "";
+    }
+  });
+</script>
+</body>
+</html>
