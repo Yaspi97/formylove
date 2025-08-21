@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Lettre machine à écrire & Arbre de cœurs</title>
+<title>Lettre machine à écrire (avec curseur) & Arbre de cœurs</title>
 <style>
   html,body{height:100%; margin:0}
   body{
@@ -33,6 +33,17 @@
   }
   .letter h2{ margin:0 0 .6rem; font-size:clamp(18px,2.4vw,22px); }
 
+  /* Curseur clignotant */
+  .cursor{
+    display:inline-block;
+    width:0.6ch;
+    margin-left:1px;
+    border-right:2px solid #222;
+    animation: blink 1s steps(1) infinite;
+    transform: translateY(1px);
+  }
+  @keyframes blink{ 0%,50%{opacity:1} 50.001%,100%{opacity:0} }
+
   .right{ position:relative; display:grid; place-items:center; }
   .halo{
     position:absolute;
@@ -53,7 +64,7 @@
   <div class="stage">
     <!-- 1) LETTRE -->
     <article class="letter" id="letter">
-      <h2>Hey toi</h2>
+      <h2>Hey toi Aïssa</h2>
       <p id="text"></p>
     </article>
 
@@ -61,7 +72,6 @@
     <div class="right">
       <div class="halo"></div>
       <svg id="love-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
-
         <!-- Tronc -->
         <path class="trunk t1" d="M195 330 L165 330 L150 195 Q148 175 130 158 Q115 144 110 130 Q108 118 122 118 Q137 121 150 135 Q165 152 175 166 Q182 176 190 166 Q206 146 224 134 Q245 120 252 120 Q267 120 262 135 Q258 147 243 160 Q224 176 215 195 L205 330 Z"/>
         <path class="trunk t2" d="M180 330 L195 330 L205 195 Q208 173 228 155 Q247 139 255 128 Q265 114 248 114 Q233 116 214 128 Q195 141 182 160 Q175 170 167 160 Q155 146 142 134 Q126 119 112 116 Q100 114 104 128 Q108 142 124 156 Q142 172 148 195 L160 330 Z"/>
@@ -86,40 +96,37 @@
   </div>
 
   <script>
-    /* ===== Texte typewriter ===== */
+    /* ===== Texte machine à écrire + curseur ===== */
     const lines = [
-      "Ce n’est pas de rime ni un poème ce que je t’écris,",
-      "mais je veux que tu saches que mon intention c’est de nous retrouver comme avant mais en meilleur.",
-      "Je veux prendre soin de toi comme tu as toujours fait avec moi",
-      "et te donner tout l'amour que j'ai.",
-      "Tu es cette personne que la vie nous offre une seule fois,",
-      "donc je n’ai pas l’intention de te filer,",
-      "parce que tu es spéciale pour moi,",
-      "tu es la seule à pouvoir me faire sourire.",
-      "(à suivre)"
-    ];
+      "Hey toi Aïssa, mon code préféré,",
+      "Avec toi, mon cœur est toujours bien codé.",
+      "",
 
     const textBox = document.getElementById("text");
+
     let lineIndex = 0;
 
     function typeLine(){
-      if(lineIndex >= lines.length) return;
-      let chars = lines[lineIndex].split("");
-      let i = 0;
-      let span = document.createElement("span");
-      textBox.appendChild(span);
+        // Fin : garde le curseur mais arrête le clignotement plus doux si tu veux :
+        // cursor.style.animation = "blink 1.5s steps(1) infinite";
+      }
+      const content = lines[lineIndex];
+      const span = document.createElement("span");
+      textBox.insertBefore(span, cursor); // placer le texte juste avant le curseur
 
-      let typer = setInterval(()=>{
-        if(i < chars.length){
-          span.textContent += chars[i];
+      const speed = 40;          // ms par lettre
+      const lineGap = 500;       // délai entre lignes
+      const typer = setInterval(()=>{
+          span.textContent += content.charAt(i);
           i++;
-        } else {
+        }else{
           clearInterval(typer);
-          textBox.appendChild(document.createElement("br"));
+          // saut de ligne (avant le curseur)
+          textBox.insertBefore(document.createElement("br"), cursor);
           lineIndex++;
-          setTimeout(typeLine, 500); // délai entre les lignes
+          setTimeout(typeLine, lineGap);
         }
-      }, 40); // vitesse (ms par lettre)
+      }, speed);
     }
     window.addEventListener("load", ()=> setTimeout(typeLine, 600));
 
@@ -180,3 +187,11 @@
   </script>
 </body>
 </html>
+        if(i < content.length){
+      let i = 0;
+        return;
+      if(lineIndex >= lines.length){
+    textBox.appendChild(cursor);
+    cursor.className = "cursor";
+    const cursor = document.createElement("span");
+
